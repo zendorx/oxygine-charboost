@@ -73,16 +73,81 @@ namespace charboost
 #endif
         
     }*/
+    void showInterstitial(const string& location)
+    {
+#ifdef __ANDROID__
+        jniShowInterstitial(location);
+#endif
+    }
+
+    void showRewardedVideo(const string& location)
+    {
+#ifdef __ANDROID__
+        jniShowRewardedVideo(location);
+#endif
+    }
+
+    void showMoreApps(const string& location)
+    {
+#ifdef __ANDROID__
+        jniShowMoreApps(location);
+#endif
+    }
+
+    bool isInterstitialLoaded(const string& location)
+    {
+#ifdef __ANDROID__
+        return jniIsInterstitialLoaded(location);
+#endif
+        return false;
+    }
+
+    bool isRewardedVideoLoaded(const string& location)
+    {
+#ifdef __ANDROID__
+        return jniIsRewardedVideoLoaded(location);
+#endif
+        return false;
+    }
+
+    bool isMoreAppsLoaded(const string& location)
+    {
+#ifdef __ANDROID__
+        return jniIsMoreAppsLoaded(location);
+#endif
+        return false;
+    }
+
+
+    void cacheInterstitial(const string& location)
+    {
+#ifdef __ANDROID__
+        jniCacheInterstitial(location);
+#endif
+    }
+
+    void cacheRewardedVideo(const string& location)
+    {
+#ifdef __ANDROID__
+        jniCacheRewardedVideo(location);
+#endif
+    }
+
+    void cacheMoreApps(const string& location)
+    {
+#ifdef __ANDROID__
+        jniCacheMoreApps(location);
+#endif
+    }
 
 
     namespace internal
     {
-
-        /*void callItFromNativeCallback()
+        void onChanged(const string& location, int adType, int newStatus)
         {
-            YourEventExample ev;
+            OnChangeEvent ev(location, adType, newStatus);
             _dispatcher->dispatchEvent(&ev);
-        }*/
+        }
     }
 }
 

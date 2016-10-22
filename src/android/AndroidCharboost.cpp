@@ -24,16 +24,16 @@ bool isCharboostEnabled()
 
 extern "C"
 {
-    /*JNIEXPORT void JNICALL Java_org_oxygine_charboost_CharboostAdapter_YOUR_FUNC_NAME(JNIEnv* env, jobject obj, jstring json_data, jboolean error)
+    JNIEXPORT void JNICALL Java_org_oxygine_charboost_CharboostAdapter_onChaned(JNIEnv* env, jobject obj, jstring location, int adType, int newStatus)
     {
         string data = jniGetString(env, json_data);
 
         core::getMainThreadDispatcher().postCallback([ = ]()
         {
-            //call internal function there from src/charboost/charboost.h
-            charboost::internal::callItFromNativeCallback();
+            string loc_s = jniGetString(env, (jstring) location);
+            charboost::internal::onChanged(loc_s, adType, newStatus);
         });
-    }*/
+    }
 
 
 }
@@ -80,9 +80,207 @@ void jniCharboostFree()
     }
     catch (const notFound&)
     {
-
+        log::error("jniCharboostFree failed, class/member not found");
     }
 }
+
+
+void jniShowInterstitial(const string& location)
+{
+    if (!isCharboostEnabled())
+        return;
+
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "showInterstitial", "()V");
+        JNI_NOT_NULL(jisMethod);
+        env->CallVoidMethod(_jCharboostObject, jisMethod, jlocation);
+    }
+    catch (const notFound&)
+    {
+        log::error("jniShowInterstitial failed, class/member not found");
+    }
+}
+
+void jniShowRewardedVideo(const string& location)
+{
+    if (!isCharboostEnabled())
+        return;
+
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "showRewardedVideo", "()V");
+        JNI_NOT_NULL(jisMethod);
+        env->CallVoidMethod(_jCharboostObject, jisMethod, jlocation);
+    }
+    catch (const notFound&)
+    {
+        log::error("jniShowRewardedVideo failed, class/member not found");
+    }
+}
+
+void jniShowMoreApps(const string& location)
+{
+    if (!isCharboostEnabled())
+        return;
+
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "showMoreApps", "()V");
+        JNI_NOT_NULL(jisMethod);
+        env->CallVoidMethod(_jCharboostObject, jisMethod, jlocation);
+    }
+    catch (const notFound&)
+    {
+        log::error("jniShowMoreApps failed, class/member not found");
+    }
+}
+
+
+bool jniIsInterstitialLoaded(const string& location)
+{
+    if (!isCharboostEnabled())
+        return false;
+
+    bool result = false;
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "isInterstitialLoaded", "()Z");
+        JNI_NOT_NULL(jisMethod);
+        jboolean jb = env->CallBooleanMethod(_jCharboostObject, jisMethod, jlocation);
+        result = (bool) jb;
+    }
+    catch (const notFound&)
+    {
+        log::error("jniIsInterstitialLoaded failed, class/member not found");
+    }
+
+    return false;
+}
+
+bool jniIsRewardedVideoLoaded(const string& location)
+{
+    if (!isCharboostEnabled())
+        return false;
+
+    bool result = false;
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "isRewardedVideoLoaded", "()Z");
+        JNI_NOT_NULL(jisMethod);
+        jboolean jb = env->CallBooleanMethod(_jCharboostObject, jisMethod, jlocation);
+        result = (bool) jb;
+    }
+    catch (const notFound&)
+    {
+        log::error("jniIsRewardedVideoLoaded failed, class/member not found");
+    }
+
+
+    return false;
+}
+
+bool jniIsMoreAppsLoaded(const string& location)
+{
+    if (!isCharboostEnabled())
+        return false;
+
+    bool result = false;
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "isMoreAppsLoaded", "()Z");
+        JNI_NOT_NULL(jisMethod);
+        jboolean jb = env->CallBooleanMethod(_jCharboostObject, jisMethod, jlocation);
+        result = (bool) jb;
+    }
+    catch (const notFound&)
+    {
+        log::error("jniIsMoreAppsLoaded failed, class/member not found");
+    }
+
+    return false;
+}
+
+
+void jniCacheInterstitial(const string& location)
+{
+    if (!isCharboostEnabled())
+        return;
+
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "cacheInterstitial", "()V");
+        JNI_NOT_NULL(jisMethod);
+        env->CallVoidMethod(_jCharboostObject, jisMethod, jlocation);
+    }
+    catch (const notFound&)
+    {
+        log::error("jniCacheInterstitial failed, class/member not found");
+    }
+}
+
+void jniCacheRewardedVideo(const string& location)
+{
+    if (!isCharboostEnabled())
+        return;
+
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "cacheRewardedVideo", "()V");
+        JNI_NOT_NULL(jisMethod);
+        env->CallVoidMethod(_jCharboostObject, jisMethod, jlocation);
+    }
+    catch (const notFound&)
+    {
+        log::error("jniCacheRewardedVideo failed, class/member not found");
+    }
+}
+
+void jniCacheMoreApps(const string& location)
+{
+    if (!isCharboostEnabled())
+        return;
+
+    try
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
+        jstring jlocation = env->NewStringUTF(location.c_str());
+        jmethodID jisMethod = env->GetMethodID(_jCharboostClass, "cacheMoreApps", "()V");
+        JNI_NOT_NULL(jisMethod);
+        env->CallVoidMethod(_jCharboostObject, jisMethod, jlocation);
+    }
+    catch (const notFound&)
+    {
+        log::error("jniCacheMoreApps failed, class/member not found");
+    }
+}
+
+
 
 /*
 bool jniCharboostSomeBoolFunc()
