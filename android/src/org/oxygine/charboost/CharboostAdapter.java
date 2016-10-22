@@ -2,6 +2,7 @@ package org.oxygine.charboost;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import com.chartboost.sdk.Chartboost;
 import com.chartboost.sdk.ChartboostDelegate;
@@ -26,15 +27,20 @@ public class CharboostAdapter extends ActivityObserver
     public static native void onChaned(String locatiom, int adType, int newStatus);
 
     public CharboostAdapter(Activity a, final String APP_ID, final String APP_SIG) {
+        Log.i(TAG, "CharboostAdapter");
+
         _activity = a;
 
         Chartboost.startWithAppId(_activity, APP_ID, APP_SIG);
         Chartboost.setDelegate(cbDelegateObject);
         Chartboost.onCreate(_activity);
+
+
     }
 
     void showInterstitial(final String location)
     {
+        Log.i(TAG, "showInterstitial");
         _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -45,6 +51,7 @@ public class CharboostAdapter extends ActivityObserver
 
     void showRewardedVideo(final String location)
     {
+        Log.i(TAG, "showRewardedVideo");
         _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -55,6 +62,7 @@ public class CharboostAdapter extends ActivityObserver
 
     void showMoreApps(final String location)
     {
+        Log.i(TAG, "showMoreApps");
         _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -65,21 +73,25 @@ public class CharboostAdapter extends ActivityObserver
 
     boolean isInterstitialLoaded(final String location)
     {
+        Log.i(TAG, "isInterstitialLoaded");
         return Chartboost.hasInterstitial(location);
     }
 
     boolean isRewardedVideoLoaded(final String location)
     {
+        Log.i(TAG, "isRewardedVideoLoaded");
         return Chartboost.hasRewardedVideo(location);
     }
 
     boolean isMoreAppsLoaded(final String location)
     {
+        Log.i(TAG, "isMoreAppsLoaded");
         return Chartboost.hasMoreApps(location);
     }
 
     void cacheInterstitial(final String location)
     {
+        Log.i(TAG, "cacheInterstitial");
         _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -90,6 +102,7 @@ public class CharboostAdapter extends ActivityObserver
 
     void cacheRewardedVideo(final String location)
     {
+        Log.i(TAG, "cacheRewardedVideo");
         _activity.runOnUiThread(new Runnable()
         {
             @Override
@@ -102,6 +115,7 @@ public class CharboostAdapter extends ActivityObserver
 
     void cacheMoreApps(final String location)
     {
+        Log.i(TAG, "cacheMoreApps");
         _activity.runOnUiThread(new Runnable()
         {
             @Override
@@ -165,24 +179,28 @@ public class CharboostAdapter extends ActivityObserver
         @Override
         public void didDisplayInterstitial(String location)
         {
+            Log.i(TAG, "didDisplayInterstitial");
             onChaned(location, AD_INTER, ADA_SHOWED);
         }
 
         @Override
         public void didCacheInterstitial(String location)
         {
+            Log.i(TAG, "didCacheInterstitial");
             onChaned(location, AD_INTER, ADA_LOADED);
         }
 
         @Override
         public void didFailToLoadInterstitial(String location, CBError.CBImpressionError error)
         {
+            Log.i(TAG, "didFailToLoadInterstitial");
             onChaned(location, AD_INTER, ADA_FAILED);
         }
 
         @Override
         public void didCloseInterstitial(String location)
         {
+            Log.i(TAG, "didCloseInterstitial");
             onChaned(location, AD_INTER, ADA_CLOSED);
         }
 
@@ -190,24 +208,28 @@ public class CharboostAdapter extends ActivityObserver
         @Override
         public void didDisplayMoreApps(String location)
         {
+            Log.i(TAG, "didDisplayMoreApps");
             onChaned(location, AD_MOREAPPS, ADA_SHOWED);
         }
 
         @Override
         public void didCacheMoreApps(String location)
         {
+            Log.i(TAG, "didCacheMoreApps");
             onChaned(location, AD_MOREAPPS, ADA_LOADED);
         }
 
         @Override
         public void didCloseMoreApps(String location)
         {
+            Log.i(TAG, "didCloseMoreApps");
             onChaned(location, AD_MOREAPPS, ADA_CLOSED);
         }
 
         @Override
         public void didFailToLoadMoreApps(String location, CBError.CBImpressionError error)
         {
+            Log.i(TAG, "didFailToLoadMoreApps");
             onChaned(location, AD_MOREAPPS, ADA_FAILED);
         }
 
@@ -218,6 +240,7 @@ public class CharboostAdapter extends ActivityObserver
 // servers and cached locally.
         public void didCacheRewardedVideo(String location)
         {
+            Log.i(TAG, "didCacheRewardedVideo");
             onChaned(location, AD_REWARDED, ADA_LOADED);
         }
 
@@ -225,18 +248,21 @@ public class CharboostAdapter extends ActivityObserver
 // servers but failed.
         public void didFailToLoadRewardedVideo(String location, CBError.CBImpressionError error)
         {
+            Log.i(TAG, "didFailToLoadRewardedVideo");
             onChaned(location, AD_REWARDED, ADA_FAILED);
         }
 
         // Called after a rewarded video has been closed.
         public void didCloseRewardedVideo(String location)
         {
+            Log.i(TAG, "didCloseRewardedVideo");
             onChaned(location, AD_REWARDED, ADA_CLOSED);
         }
 
         // Called after a rewarded video has been viewed completely and user is eligible for reward.
         public void didCompleteRewardedVideo(String location, int reward)
         {
+            Log.i(TAG, "didCompleteRewardedVideo");
             onChaned(location, AD_REWARDED, ADA_SHOWED);
         }
     };
