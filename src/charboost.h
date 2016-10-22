@@ -15,14 +15,28 @@ namespace charboost
     void init();
     void free();
 
+	const int AD_INTER = 1;
+	const int AD_REWARDED = 2;
+	const int AD_MOREAPPS = 3;
+	
+	const int ADA_LOADED = 10;
+	const int ADA_FAILED = 11;
+	const int ADA_SHOWED = 12;
+	const int ADA_CLOSED = 13;
+
     class OnChangeEvent : public Event
     {
     public:
         enum { EVENT = sysEventID('C', 'B', 'E')};
-        OnChangeEvent(int adType, int adAction) : Event(EVENT), adAction(adAction), adType(adType) {};
+        OnChangeEvent(const string& location, int adType, int adAction) :
+			Event(EVENT), 
+			adAction(adAction), 
+			adType(adType),
+			location(location) {};
 
         int adType = 0;
         int adAction = 0;
+		string location;
     };
 
     spEventDispatcher dispatcher();
