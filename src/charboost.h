@@ -15,14 +15,14 @@ namespace charboost
     void init();
     void free();
 
-	const int AD_INTER = 1;
-	const int AD_REWARDED = 2;
-	const int AD_MOREAPPS = 3;
+	const static int AD_INTER = 1;
+	const static int AD_REWARDED = 2;
+	const static int AD_MOREAPPS = 3;
 	
-	const int ADA_LOADED = 10;
-	const int ADA_FAILED = 11;
-	const int ADA_SHOWED = 12;
-	const int ADA_CLOSED = 13;
+	const static int ADA_LOADED = 10;
+	const static int ADA_FAILED = 11;
+	const static int ADA_SHOWED = 12;
+	const static int ADA_CLOSED = 13;
 
     class OnChangeEvent : public Event
     {

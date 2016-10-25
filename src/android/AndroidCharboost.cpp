@@ -26,8 +26,6 @@ extern "C"
 {
     JNIEXPORT void JNICALL Java_org_oxygine_charboost_CharboostAdapter_onChaned(JNIEnv* env, jobject obj, jstring location, int adType, int newStatus)
     {
-        string data = jniGetString(env, json_data);
-
         core::getMainThreadDispatcher().postCallback([ = ]()
         {
             string loc_s = jniGetString(env, (jstring) location);
